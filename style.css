@@ -11,3 +11,42 @@
 /* Official RemoteDeck identity, selected 27 November 2026. */
 :root{--accent:#086caa;--paper:#f8fafc;--ink:#0c1b31;--muted:#4b6074;--line:#d5e0e9;--dark:#0d2441;--lime:#65e8d8}
 .header{min-height:88px}.brand{gap:0;line-height:1}.brand-wordmark{display:block;width:180px;height:auto;max-width:100%}.demo-brand .brand-symbol{width:26px;height:26px;object-fit:contain;flex:none}.hero{padding-top:72px;gap:46px}.hero h1{letter-spacing:-.06em;line-height:1.04}.hero-copy .lead{max-width:43ch}.hero .eyebrow{letter-spacing:.085em}.button{background:#0d315b;border-color:#0d315b;border-radius:8px}.button:hover{background:#114b7f}.workspace{border-color:#b9cfdf;box-shadow:0 12px 30px #102f4c12,6px 6px 0 #e1ebf3;border-radius:14px}.host.selected,.rail-active{background:#dceff9;color:#09577d}.host.selected{border-left-color:#087bc1}.protocol{color:#0874af}.windowfoot{color:#08726d}.demo-controls button:hover{background:#e2f4fb}.security{border-radius:14px;background:#0d2441}.security p{color:#cbdded}.architecture>div{border-color:#3a5774;border-radius:8px}.architecture span,.architecture small{color:#bbd1e5}.notice{background:#e7f2fa}.document code{background:#e7eff8}.spec-strip{border-color:var(--line)}.feature-code{color:#0874af}.preview{border-bottom:0}.skip:focus{color:var(--ink)}@media(max-width:1000px){.hero{gap:26px}}@media(max-width:760px){.header{min-height:0}.brand-wordmark{width:170px}.hero{padding-top:36px}.workspace{box-shadow:0 8px 18px #102f4c14,4px 4px 0 #e1ebf3}.security{border-radius:10px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* Workspace explorer: responsive, keyboard accessible, no remote access. */
+.workspace-switch[hidden],.workspace [hidden]{display:none!important}
+.workspace-switch{display:flex;gap:6px;padding:8px 10px;background:#edf3f8;border-bottom:1px solid #d5e0e9}
+.workspace-switch button{flex:1;background:transparent;border:1px solid transparent;color:#4b6074;font:650 11px/1.35 system-ui;padding:9px 5px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.workspace-switch button span{font:700 12px var(--mono);margin-right:4px}
+.workspace-switch button[aria-pressed=true]{background:#fff;border-color:#c4d7e5;color:#075c91;box-shadow:0 1px 2px #0d24410d}
+.workspace-switch button:hover{background:#e2edf7}
+.workspace-switch button:focus-visible{outline:2px solid #086caa;outline-offset:2px}
+.demo-panel{min-width:0;background:#f5f8fc;display:flex;flex-direction:column;min-height:294px}
+.panel-top{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:10px;border-bottom:1px solid #d5e0e9;color:#52677b;font-size:9px}
+.panel-label{font-weight:700;color:#0c1b31}
+.file-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));flex:1}
+.file-columns section{padding:10px 7px;min-width:0}
+.file-columns section+section{border-left:1px solid #d5e0e9}
+.file-columns h3{font:700 11px system-ui;margin:0 0 6px;letter-spacing:0}
+.file-path{font:9px/1.4 var(--mono);color:#4b6074;overflow-wrap:anywhere;margin:0 0 10px}
+.file-entry{font-size:9px;overflow-wrap:anywhere;padding:8px 0;border-bottom:1px solid #d5e0e9;color:#0d315b}
+.demo-hint{margin-top:auto;padding:10px;background:#e8eff6;color:#4b6074;font:10px/1.5 system-ui}
+.rdp-preview{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 10px}
+.rdp-monitor{width:44px;height:30px;border:2px solid #086caa;border-radius:5px;display:grid;place-items:center;color:#086caa;font-size:18px}
+.rdp-preview strong{font:700 13px system-ui;color:#0c1b31;margin-top:3px}
+.rdp-preview small{font:10px system-ui;color:#4b6074}
+.rdp-preview dl{margin:8px 0;width:100%;font-size:10px}
+.rdp-preview dl div{display:flex;justify-content:space-between;gap:6px;border-bottom:1px solid #d5e0e9;padding:5px 0;overflow-wrap:anywhere}
+.rdp-preview dd{margin:0;text-align:right;color:#0d315b}
+.rdp-preview dt{color:#4b6074}
+.rdp-demo-button{display:flex;justify-content:space-between;background:#dce7f1;color:#4b6074;font:600 10px system-ui;width:100%;padding:8px;border-radius:5px}
+.platforms{display:grid;grid-template-columns:.75fr 1.25fr;gap:60px;margin-top:65px;padding-bottom:48px;border-bottom:1px solid var(--line)}
+.platform-intro p:last-child{max-width:38ch}
+.platform-list{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.platform-list section{padding:26px 20px;min-width:0}
+.platform-list section+section{border-left:1px solid var(--line)}
+.platform-number,.platform-detail{display:block;color:var(--accent);font:10px/1.6 var(--mono)}
+.platform-list h3{margin-top:22px;font-size:25px}
+.platform-list p{font-size:14px;max-width:28ch}
+.platform-detail{margin-top:20px}
+@media(max-width:760px){.platforms{grid-template-columns:1fr;gap:12px;margin-top:40px;padding-bottom:30px}.platform-list section{padding:20px 10px}.workspace-switch button{font-size:10px}.workspace-switch button span{margin-right:2px}}
+@media(max-width:480px){.workspace[data-view=sftp] .workspace-body,.workspace[data-view=rdp] .workspace-body{grid-template-columns:1fr}.workspace[data-view=sftp] .hosts,.workspace[data-view=rdp] .hosts{display:none}.file-entry{font-size:11px}}

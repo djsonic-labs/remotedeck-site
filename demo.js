@@ -16,7 +16,7 @@
     {cmd:"ip -br addr", out:"lo      UNKNOWN  127.0.0.1/8\neth0    UP       192.0.2.10/24"}
   ];
   let timer = null, running = false, step = 0, pos = 0, phase = "typing", remaining = 120, transcript = [];
-  let inView = true;
+  let inView = true, activeView = "ssh";
   function paint() {
     output.replaceChildren();
     function prompt(cmd) {
@@ -37,11 +37,11 @@
   function stopTimer() { if (timer !== null) clearTimeout(timer); timer = null; }
   function schedule(ms) {
     stopTimer(); remaining=ms;
-    if (running && inView && !document.hidden) timer=setTimeout(tick, ms);
+    if (running && inView && activeView === "ssh" && !document.hidden) timer=setTimeout(tick, ms);
   }
   function tick() {
     timer=null;
-    if (!running || !inView || document.hidden) return;
+    if (!running || !inView || activeView !== "ssh" || document.hidden) return;
     if (phase==="done") { reset(); return; }
     const current=steps[step];
     if (phase==="typing") {
@@ -61,6 +61,32 @@
     if(value)schedule(remaining);else stopTimer();
   }
   function showStatic() {transcript=steps.slice(0,2);step=steps.length;pos=0;phase="done";paint();}
+  const switcher = demo.querySelector(".workspace-switch");
+  const views = ["ssh", "sftp", "rdp"];
+  const viewButtons = [...switcher.querySelectorAll("button[data-view-target]")];
+  const status = document.getElementById("demo-status");
+  function selectView(view) {
+    if (!views.includes(view)) return;
+    activeView = view;
+    demo.dataset.view = view;
+    for (const name of views) {
+      document.getElementById(name+"-panel").hidden = name !== view;
+    }
+    for (const button of viewButtons) {
+      button.setAttribute("aria-pressed", String(button.dataset.viewTarget === view));
+    }
+    for (const item of demo.querySelectorAll("[data-rail]")) {
+      item.classList.toggle("rail-active", item.dataset.rail === view);
+    }
+    for (const host of demo.querySelectorAll("[data-host]")) {
+      host.classList.toggle("selected", host.dataset.host === (view === "rdp" ? "rdp" : "ssh"));
+    }
+    status.textContent = ({ssh:"SSH demonstration",sftp:"SFTP demonstration",rdp:"RDP profile demonstration"})[view];
+    controls.hidden = view !== "ssh";
+    if (view === "ssh" && running) schedule(remaining); else stopTimer();
+  }
+  switcher.hidden = false;
+  viewButtons.forEach(button => button.addEventListener("click", () => selectView(button.dataset.viewTarget)));
   controls.hidden=false;
   toggle.addEventListener("click",()=>{if(!running && phase==="done"){reset();}setRunning(!running);});
   replay.addEventListener("click",()=>{reset();setRunning(true);});
